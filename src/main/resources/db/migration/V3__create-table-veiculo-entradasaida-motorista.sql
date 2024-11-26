@@ -20,7 +20,7 @@ CREATE TABLE Entradas_saidas (
     id_veiculo BIGINT NOT NULL,
     id_vaga BIGINT NOT NULL,
     hora_entrada TIMESTAMP,
-    hora_saida TIMESTAMP,
+    hora_saida TIMESTAMP NULL,
 
     FOREIGN KEY (id_veiculo) REFERENCES Veiculos(id_veiculo),
     FOREIGN KEY (id_vaga) REFERENCES Vagas(id_vaga)
