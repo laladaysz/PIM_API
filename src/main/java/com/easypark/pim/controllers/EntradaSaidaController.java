@@ -46,12 +46,12 @@ public class EntradaSaidaController {
         return new ResponseEntity<>(entradaSaidaGetAllService.getAll(), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{numero_vaga}")
     @Operation(summary = "Registrar Hora de Saída",
             description ="Registrar Hora de Saída",
             tags = {"Registros Entrada/Saída"})
     @Transactional
-    public ResponseEntity<EntradaSaidaDTO> updateHora(@PathVariable Long id, @RequestBody EntradaSaidaUpdateDTO data){
-        return new ResponseEntity<>(entradaSaidaUpdateHoraService.updateHoraSaida(data, id), HttpStatus.OK);
+    public ResponseEntity<EntradaSaidaDTO> updateHora(@PathVariable int numero_vaga, @RequestBody EntradaSaidaUpdateDTO data){
+        return new ResponseEntity<>(entradaSaidaUpdateHoraService.updateHoraSaida(data, numero_vaga), HttpStatus.OK);
     }
 }

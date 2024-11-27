@@ -15,9 +15,15 @@ public class EntradaSaidaUpdateHoraServiceImpl implements EntradaSaidaUpdateHora
     private EntradaSaidaRepository entradaSaidaRepository;
 
     @Override
-    public EntradaSaidaDTO updateHoraSaida(EntradaSaidaUpdateDTO data, Long id) {
-        EntradaSaida entradaSaida = entradaSaidaRepository.findById(id).orElseThrow(() -> new GenericsNotFoundException("Registro de entrada/saída não encontrado!"));
+    public EntradaSaidaDTO updateHoraSaida(EntradaSaidaUpdateDTO data, int numeroVaga) {
+        // Buscar o registro mais recente para a vaga com hora de saída nula
+        EntradaSaida entradaSaida = entradaSaidaRepository
+                .findFirstByVagaNumeroVagaAndHoraSaidaIsNullOrderByHoraEntradaDesc(numeroVaga);
+
         entradaSaida.setHoraSaida(data.horaSaida());
+
+
+        entradaSaidaRepository.save(entradaSaida);
 
         return new EntradaSaidaDTO(entradaSaida);
     }
