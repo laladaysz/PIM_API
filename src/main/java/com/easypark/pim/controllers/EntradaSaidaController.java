@@ -19,7 +19,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/entradaSaida")
-@SecurityRequirement(name= "bearer-key")
 public class EntradaSaidaController {
     @Autowired
     private EntradaSaidaSaveService entradaSaidaSaveService;
@@ -34,7 +33,7 @@ public class EntradaSaidaController {
     @Operation(summary = "Registrar Entrada/Saída",
             description ="Registrar Entrada/Saída",
             tags = {"Registros Entrada/Saída"})
-    public ResponseEntity<?> save(@RequestBody @Valid EntradaSaidaCreateDTO data, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<?> save(@RequestBody @Valid EntradaSaidaCreateDTO data){
         return new ResponseEntity<>(entradaSaidaSaveService.save(data), HttpStatus.OK);
     }
 
@@ -52,6 +51,8 @@ public class EntradaSaidaController {
             tags = {"Registros Entrada/Saída"})
     @Transactional
     public ResponseEntity<EntradaSaidaDTO> updateHora(@PathVariable int numero_vaga, @RequestBody EntradaSaidaUpdateDTO data){
+        System.out.println("data: " + data);
+        System.out.println("numero vaga: " + numero_vaga);
         return new ResponseEntity<>(entradaSaidaUpdateHoraService.updateHoraSaida(data, numero_vaga), HttpStatus.OK);
     }
 }

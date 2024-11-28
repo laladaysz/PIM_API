@@ -51,12 +51,12 @@ public class VagaController {
         return new ResponseEntity<>(vagaGetByNumVagaService.getByNumVaga(numVaga), HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/{numVaga}")
     @Operation(summary = "Atualizar Status da Vaga",
             description ="Atualizar Status da Vaga",
             tags = {"Vagas"})
     @Transactional
-    public ResponseEntity<VagaDTO> update(@RequestBody @Valid VagaUpdateDTO data, @RequestParam int numVaga){
+    public ResponseEntity<VagaDTO> update(@RequestBody @Valid VagaUpdateDTO data, @PathVariable int numVaga){
         return new ResponseEntity<>(vagaUpdateService.update(data, numVaga), HttpStatus.OK);
     }
 

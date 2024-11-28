@@ -22,9 +22,6 @@ public class SecurityConfiguration {
     @Autowired
     private SecurityFilter securityFilter;
 
-    @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 
@@ -32,15 +29,22 @@ public class SecurityConfiguration {
                 .cors(cors -> Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(customAuthenticationEntryPoint))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "/users/login").permitAll(); // Verificando se o usuário está
                     // logado
-                    req.requestMatchers(HttpMethod.POST, "/users/register").permitAll();
-                    req.requestMatchers(HttpMethod.GET, "/vagas").hasAnyRole("DEFAULT");
                     req.requestMatchers(HttpMethod.GET, "/vagas/{numeroVaga}/veiculo-atual").hasAnyRole("ADMIN");
+
+                    req.requestMatchers(HttpMethod.PUT, "/vagas/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/vagas", "/vagas/**").permitAll();
+
+                    req.requestMatchers(HttpMethod.POST, "/entradaSaida/**").permitAll();
+                    req.requestMatchers(HttpMethod.PUT, "/entradaSaida/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/entradaSaida/**").permitAll();
+
+                    req.requestMatchers(HttpMethod.POST, "/users/register").permitAll();
+
+
                     req.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     req.requestMatchers("/connect").permitAll();
                     req.anyRequest().authenticated();

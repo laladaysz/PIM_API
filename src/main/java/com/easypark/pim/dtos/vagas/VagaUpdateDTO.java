@@ -4,5 +4,7 @@ import com.easypark.pim.entities.enums.StatusVaga;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-public record VagaUpdateDTO(@NotNull @Valid StatusVaga statusVaga) {
+public record VagaUpdateDTO(
+        @NotNull @Valid StatusVaga statusVaga
+) {
 }
